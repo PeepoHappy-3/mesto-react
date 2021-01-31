@@ -1,0 +1,6 @@
+.card__body {
+    display: flex;
+    justify-content: space-between;
+    color: #000000;
+    padding: 25px 21px 23px 21px;
+}

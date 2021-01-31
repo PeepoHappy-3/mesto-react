@@ -1,0 +1,19 @@
+.profile__btn_edit {
+    border: 1px solid #FFFFFF;
+    border-radius: 1px;
+    width: 24px;
+    height: 24px;
+    background-image: url(../../../../images/edit.svg);
+    background-size: cover;
+    align-self: center;
+    outline-style: none;
+    box-sizing: border-box;
+}
+
+@media screen and (max-width:500px) {
+    .profile__btn_edit {
+        width: 18px;
+        height: 18px;
+        margin-left: 0px;
+    }
+}
