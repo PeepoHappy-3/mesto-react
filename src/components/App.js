@@ -25,8 +25,8 @@ function App() {
   function handleCardClick(card) {
     setSelectedCard({
       ...selectedCard,
-      src: card.props.children[0].props.src,
-      name: card.props.children[0].props.alt
+      src: card.link,
+      name: card.name
     });
     setImagePopup(true);
   }

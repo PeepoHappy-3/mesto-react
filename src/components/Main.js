@@ -47,20 +47,7 @@ function Main(props) {
       <section className="cards-gallery">
         {cards.map((card, i) => {
           return (
-            <Card className="card" key={card._id} onCardClick={props.onCardClick} card={
-              <>
-                <img src={card.link} alt={card.name} className="card__image" />
-                <button type="button" className="card__delete"></button>
-                <div className="card__body">
-                  <h3 className="card__heading">{card.name}</h3>
-                  <div className="card__like">
-                    <button type="button" className="card__btn"></button>
-                    <span className="card__like-count">{card.likes.length}</span>
-                  </div>
-                </div>
-              </>}>
-
-            </Card>
+            <Card className="card" key={card._id} onCardClick={props.onCardClick} card={card} />
           );
         })}
       </section>
