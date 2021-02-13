@@ -5,6 +5,9 @@ import Footer from './Footer';
 import PopupWithForm from './PopupWithForm';
 import ImagePopup from './ImagePopup';
 import React from 'react';
+import api from '../utils/api';
+import { CurrentUserContext } from '../contexts/CurrentUserContext';
+import EditProfilePopup from './EditProfilePopup';
 
 function App() {
   const [isEditProfilePopupOpened, setIsEditProfilePopupOpened] = React.useState(false);
@@ -12,6 +15,19 @@ function App() {
   const [isAddPlacePopupOpened, setIsAddPlacePopupOpened] = React.useState(false);
   const [isImagePopupOpened, setIsImagePopupOpened] = React.useState(false);
   const [selectedCard, setSelectedCard] = React.useState({});
+
+  const [currentUser, setCurrentUser] = React.useState({});
+
+  React.useEffect(() => {
+    async function getUserInfo() {
+      try {
+        setCurrentUser(await api.getProfileInfo());
+      } catch (e) {
+        console.log(e.message);
+      }
+    }
+    getUserInfo();
+  }, []);
   function handleAvatarClick() {
     setIsEditAvatarPopupOpened(true);
   }
@@ -36,20 +52,27 @@ function App() {
     setIsAddPlacePopupOpened(false);
     setIsImagePopupOpened(false);
   }
+
+  async function handleUpdateUser(user) {
+    try {
+      setCurrentUser(await api.setProfileInfo(user));
+      closeAllPopups();
+    } catch (e) {
+      console.log(e.message);
+    }
+  }
   return (
     <>
       <div className="page">
         <div className="page__container">
-          <Header src={Logo} />
-          <Main onEditAvatar={handleAvatarClick} onEditProfile={handleProfileClick} onAddPlace={handleAddClick} onCardClick={handleCardClick} />
-          <Footer />
+          <CurrentUserContext.Provider value={currentUser}>
+            <Header src={Logo} />
+            <Main onEditAvatar={handleAvatarClick} onEditProfile={handleProfileClick} onAddPlace={handleAddClick} onCardClick={handleCardClick} />
+            <Footer />
+            <EditProfilePopup isOpened={isEditProfilePopupOpened} onClose={closeAllPopups} onUpdateUser={handleUpdateUser} />
+          </CurrentUserContext.Provider>
         </div>
-        <PopupWithForm name="profile" title="Редактировать профиль" isOpened={isEditProfilePopupOpened} onClose={closeAllPopups}>
-          <input id="name-input" type="text" className="popup__input  popup__input_type_title" placeholder="Имя" name="name" required minLength="2" maxLength="40" />
-          <span id="name-input-error" className="popup__error"></span>
-          <input id="job-input" type="text" className="popup__input popup__input_type_subtitle" placeholder="О себе" name="about" required minLength="2" maxLength="200" />
-          <span id="job-input-error" className="popup__error"></span>
-        </PopupWithForm>
+
         <PopupWithForm name="avatar" title="Обновить аватар" isOpened={isEditAvatarPopupOpened} onClose={closeAllPopups}>
           <input id="avatar-input" type="url" className="popup__input  popup__input_type_link" placeholder="Ссылка на картинку" name="avatar" required />
           <span id="avatar-input-error" className="popup__error"></span>

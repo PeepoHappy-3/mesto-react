@@ -96,6 +96,10 @@ export class Api {
     })
   }
 
+  changeLikeStatus(id, isLiked) {
+    return (isLiked) ? this.deleteLike(id) : this.putLike(id);
+  }
+
   setProfileAvatar(data) {
     return fetch(`${this._baseUrl}users/me/avatar`, {
       method: 'PATCH',
