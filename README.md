@@ -2,6 +2,7 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+gh-pages link: https://peepohappy-3.github.io/mesto-react/
 ## Available Scripts
 
 In the project directory, you can run:
